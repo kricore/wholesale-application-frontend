@@ -1,0 +1,74 @@
+<main class="main_page main_cart">
+  <section class="section">
+    <div class="wrapper">
+      <h2 class="section_title">Products</h2>
+      </div>
+      <div class="wrapper">
+        <div class="inner">
+            <div class="notification message" *ngIf="message">
+              {{message}}
+            </div>
+            <div class="cart_items">
+              <article class="cart_item" *ngFor="let product of cartItems | async; let i = index;">
+                <div class="flex_container">
+                  <div class="col-3 col-sm-12">
+                    <figure class="product__image flex_container">
+                      <img [ngClass]="['lazyload']" [attr.data-src]="product.productImage" alt="{{product.title}}" />
+                    </figure>
+                    </div>
+                  <div class="col-sm-12 col-9 flex_container row">
+                    <h4 class="col-12 product__title l_font">
+                      {{product.title}}
+                    </h4>
+
+                      <div class="col-12 flex_container row product__info">
+                        <div class="col-sm-12 col-6 product__summary">
+                          <div *ngIf="product.productDescription">
+                            <span class="label s_font">Description</span>
+                            {{product.productDescription}}
+                          </div>
+                        </div>
+                        <div *ngIf="product.errorMessage" class="error">
+                          {{product.errorMessage}}
+                        </div>
+                        <div class="col-sm-12 col-4 flex_container row">
+                          <div class="col-12 quantity">
+                            <span class="quantity__label label s_font">Quantity</span>
+                            <button class="quantity__minus dark_color" (click)="decreaseQuantity(i)">
+                              <span class="invisible">quantity minus</span>
+                            </button>
+                            <input class="quantity__input" type="number" min="0" [(ngModel)]="product.quantity">
+                            <button class="quantity__plus dark_color" (click)="increaseQuantity(i)">
+                              <span class="invisible">quantity plus</span>
+                            </button>
+                          </div>
+                          <div class="col-12 price">
+                            <span class="price__label label s_font">Price</span>
+                            <div class="price__amount l_font">
+                              {{product.productPrice * product.quantity | currency: "&euro;"}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-2 remove_from_cart text-right">
+                          <button class="button btn small" (click)="removeItem(i)">Remove</button>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+        <div class="cart_totals">
+          <h2 class="cart__subtotal l_font">
+            TOTAL PRICE<br />
+            {{ cartService.getTotalCost() | currency: "&euro;" }}
+          </h2>
+          <div class="cart__finalize_order">
+            <button class="button cart__order" (click)="finalizeOrder()">
+              SEND ORDER
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,58 @@
+<div class="inner">
+    <div *ngIf="!variations || variations.length === 0">
+      <h3>Product is not available for Wholesale purchase</h3>
+    </div>
+
+    <div *ngFor="let variation of variations; let i = index;" class="product__variation variation">
+      <small *ngIf="variation.message">{{variation.message}}</small>
+
+      <h4 class="variation__title l_font">
+        {{variation.title}}
+      </h4>
+      <div class="variation__main flex_container">
+
+        <figure *ngIf="!!variation.featuredImage" class="product__image variation__image">
+            <img [ngClass]="['lazyload']" [attr.data-src]="variation.featuredImage" alt="{{variation.title}}" />
+        </figure>
+
+        <div class="variation__summary flex_container row">
+          <div class="col-12 variation__desc s_font">
+            {{variation.description || variation.title}}
+          </div>
+          <div class="col-12 flex_container row">
+            <div class="price col">
+              <span class="price__label label s_font">Price</span>
+              <div class="price__amount l_font">
+                {{variation.price | currency: "&euro;" }}
+              </div>
+            </div>
+            <div class="quantity col">
+              <span class="quantity__label">Quantity</span>
+
+              <button class="quantity__minus" (click)="decreaseQuantity(variation.id)">
+                <span class="invisible">quantity minus</span>
+              </button>
+
+              <input class="quantity__input" type="number" min="0" [(ngModel)]="variation.quantity" readonly="true" />
+
+              <button class="quantity__plus" (click)="increaseQuantity(variation.id)">
+                <span class="invisible">quantity plus</span>
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <button class="button alt_reverse add_to_cart" (click)="addToCart(variation)">ADD PRODUCT</button>
+
+    </div>
+
+</div>
+
+
+
+
+

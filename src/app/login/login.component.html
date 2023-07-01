@@ -1,0 +1,33 @@
+<main class="main_page main_login">
+
+  <div class="login_container">
+    <div class="wrapper flex_container row">
+
+      <div class="col vertical_center">
+       <!-- <h1 class="page_title">Login</h1> -->
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form_row">
+            <label>Email</label>
+            <input type="email" formControlName="email">
+            <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+              <div class="error_msg" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+              <div class="error_msg" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email address.</div>
+            </div>
+          </div>
+          <div class="form_row">
+            <label>Password</label>
+            <input type="password" formControlName="password">
+            <div
+              *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+              <div class="error_msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+            </div>
+          </div>
+          <button type="submit" class="button" [disabled]="loginForm.invalid">Login</button>
+          <div *ngIf="errorMessage"><br />{{ errorMessage }}</div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>

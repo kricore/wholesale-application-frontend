@@ -1,0 +1,27 @@
+<section *ngIf="orders" class="section products_section">
+  <div class="wrapper">
+    <br />
+    <h2 class="section_title">Order history</h2>
+
+    <div class="flex_container row">
+      <article class="col-12 order" *ngFor="let order of orders | async"
+      >
+        <div class="order_header">
+          By: <strong>{{order.user}}</strong>,
+          Value: <strong>{{order.totalPrice | currency:"EUR":"symbol" }}</strong> ,
+          Total Items: <strong>{{order.totalItems}}</strong>,
+          Placed on: {{order.datePlaced | date}}
+          <div>Order id: <strong>{{order._id}}</strong></div>
+        </div>
+
+        <div class="order_info paragraph">
+          <ul>
+            <li class="order__item" *ngFor="let item of order.items">
+              {{item.quantity}} x {{item.productTitle}} SKU: {{item.productId}}
+            </li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+<main class="main_page main_home">
+  <section class="section intro_section">
+    <div class="wrapper">
+      <h2 class="page_title">
+        Afroditi Simita jewellery
+      </h2>
+      <div class="paragraph">
+        <p>
+        The happy jewels of my soul. A catalog where you can see the whole<br />
+        of my work. Elegant cuts, fine designs, bright silver, warm gold, with a tender look at tradition.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="products" class="section products_section">
+    <div class="wrapper">
+      <h2 class="section_title">Products</h2>
+
+      <div class="flex_container row">
+        <article class="col-xs-12 col-sm-6 col-4 col-lg-3 product" *ngFor="let product of products | async"
+          (click)="handleProductClickEvent(product)"
+        >
+          <figure class="product__image">
+            <img [ngClass]="['lazyload']" [attr.data-src]="product.featuredImage" alt="{{product.title}}" />
+          </figure>
+          <div class="product_information paragraph">
+            <h3 class="product__title">{{product.title}}</h3>
+          </div>
+        </article>
+          <aside [class]="popupClass">
+            <button (click)="closePopup()" class="popup__close">
+              <span class="invisible">Close popup</span>
+            </button>
+            <app-popup [variations]="selectedVariations" [id]="selectedProductId"></app-popup>
+          </aside>
+      </div>
+    </div>
+  </section>
+</main>
